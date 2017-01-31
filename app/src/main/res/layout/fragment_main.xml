@@ -11,4 +11,8 @@
     tools:context="com.lluis.bayer.bicingmap.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
+    <org.osmdroid.views.MapView android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
 </RelativeLayout>
