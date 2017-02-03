@@ -3,6 +3,15 @@ package com.lluis.bayer.bicingmap;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -60,7 +69,6 @@ public class MainActivityFragment extends Fragment {
         mapController.setZoom(20);
         GeoPoint startPoint = new GeoPoint(41.390205, 2.154007);
         mapController.setCenter(startPoint);
-
         return view;
     }
 
@@ -81,8 +89,11 @@ public class MainActivityFragment extends Fragment {
             Marker startMarker = new Marker(map);
             startMarker.setPosition(new GeoPoint(station.getDoubleLatitude(), station.getDoubleLongitude()));
             startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            //startMarker.setIcon(getResources().getDrawable(R.drawable.ic_logo_bicing));
+            startMarker.setIcon(writeOnDrawable(R.drawable.map_marker_icon2, station.getBikes()));
             startMarker.setTitle("["+station.getStatus()+"] "+station.getStreetName());
+            startMarker.setEnabled(true);
+            startMarker.showInfoWindow();
+
             poiMarkers.add(startMarker);
         }
         map.getOverlays().add(poiMarkers);
@@ -90,5 +101,25 @@ public class MainActivityFragment extends Fragment {
         // put markers on map & refresh
     }
 
+
+    public BitmapDrawable writeOnDrawable(int drawableId, String text){
+
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), drawableId).copy(Bitmap.Config.ARGB_8888, true);
+
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setFakeBoldText(true);
+        paint.setTextSize(55);
+        if(text.equals("0")) {
+            paint.setColor(Color.RED);
+        }else{
+            paint.setColor(Color.GREEN);
+        }
+
+        Canvas canvas = new Canvas(bm);
+        canvas.drawText(text, bm.getWidth()/2 - (text.length() * 15), 110, paint);
+
+        return new BitmapDrawable(bm);
+    }
 
 }
