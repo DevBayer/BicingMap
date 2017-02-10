@@ -96,4 +96,11 @@ public class Station implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public int getPercentage(){
+        if(Integer.parseInt(slots) == 0) return 0;
+        Double result = (Double.parseDouble(bikes) / Double.parseDouble(slots)) * 100;
+        return result.intValue();
+    }
+
 }

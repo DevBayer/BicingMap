@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.lluis.bayer.bicingmap.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_refresh"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="Refresh"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_refresh_48px" />
 </menu>
